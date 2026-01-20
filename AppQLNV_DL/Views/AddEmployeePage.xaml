@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:AppQLNV_DL.ViewModels"
+             x:Class="AppQLNV_DL.Views.AddEmployeePage"
+             Title="Thêm nhân viên mới"
+             BackgroundColor="#F5F6FA">
+    <!-- Màu nền xám nhạt hiện đại -->
+
+    <ContentPage.BindingContext>
+        <viewmodels:AddEmployeeViewModel/>
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="25" Spacing="20">
+
+            <!-- Phần đầu: Hình minh họa hoặc Icon -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,10,0,10">
+                <Border WidthRequest="100" 
+                        HeightRequest="100" 
+                        StrokeShape="RoundRectangle 50" 
+                        BackgroundColor="White" 
+                        StrokeThickness="0">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,5" Radius="15" Opacity="0.1"/>
+                    </Border.Shadow>
+                    <Label Text="👤" FontSize="50" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Border>
+                <Label Text="Thông tin nhân viên" 
+                       FontSize="20" 
+                       FontAttributes="Bold" 
+                       TextColor="#2C3E50" 
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+            <!-- Form nhập liệu -->
+            <VerticalStackLayout Spacing="15">
+
+                <!-- Ô nhập Họ Tên -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Họ và tên" FontSize="14" FontAttributes="Bold" TextColor="#7F8C8D" Margin="5,0"/>
+                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="White" HeightRequest="55">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05"/>
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="50, *">
+                            <Label Text="👤" VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>
+                            <Entry Grid.Column="1" 
+                                   Text="{Binding FullName}" 
+                                   Placeholder="Nguyễn Văn A" 
+                                   VerticalOptions="Center"
+                                   TextColor="#2D3436"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Ô nhập CCCD -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Số CCCD" FontSize="14" FontAttributes="Bold" TextColor="#7F8C8D" Margin="5,0"/>
+                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="White" HeightRequest="55">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05"/>
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="50, *">
+                            <Label Text="🆔" VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>
+                            <Entry Grid.Column="1" 
+                                   Text="{Binding CitizenId}" 
+                                   Placeholder="Nhập 12 số CCCD" 
+                                   Keyboard="Numeric"
+                                   VerticalOptions="Center"
+                                   TextColor="#2D3436"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Ô nhập Số điện thoại -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Số điện thoại" FontSize="14" FontAttributes="Bold" TextColor="#7F8C8D" Margin="5,0"/>
+                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="White" HeightRequest="55">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05"/>
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="50, *">
+                            <Label Text="📞" VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>
+                            <Entry Grid.Column="1" 
+                                   Text="{Binding PhoneNumber}" 
+                                   Placeholder="090xxxxxxx" 
+                                   Keyboard="Telephone"
+                                   VerticalOptions="Center"
+                                   TextColor="#2D3436"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Ô chọn Phòng ban -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Phòng ban" FontSize="14" FontAttributes="Bold" TextColor="#7F8C8D" Margin="5,0"/>
+                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="White" HeightRequest="55">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05"/>
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="50, *">
+                            <Label Text="🏢" VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>
+                            <Picker Grid.Column="1"
+                                    ItemsSource="{Binding Departments}"
+                                    ItemDisplayBinding="{Binding DepartmentName}"
+                                    SelectedItem="{Binding SelectedDepartment}"
+                                    Title="Nhấn để chọn phòng ban"
+                                    VerticalOptions="Center"
+                                    TextColor="#2D3436"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+
+            <!-- Nút Lưu -->
+            <Button Text="LƯU NHÂN VIÊN"
+                    Command="{Binding SaveEmployeeCommand}"
+                    BackgroundColor="RoyalBlue"
+                    TextColor="White"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    HeightRequest="55"
+                    CornerRadius="12"
+                    Margin="0,15,0,0">
+                <Button.Shadow>
+                    <Shadow Brush="RoyalBlue" Offset="0,4" Radius="10" Opacity="0.3"/>
+                </Button.Shadow>
+            </Button>
+
+            <Label Text="Dữ liệu sẽ được lưu vào hệ thống quản lý tập trung." 
+                   FontSize="12" 
+                   TextColor="Gray" 
+                   HorizontalOptions="Center" 
+                   Margin="0,10"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

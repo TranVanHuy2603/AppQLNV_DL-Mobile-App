@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppQLNV_DL.LoginPage"
+             Shell.NavBarIsVisible="False">
+
+    <!-- Background tổng -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#EEF2F7" Offset="0"/>
+            <GradientStop Color="#E1E7F0" Offset="1"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid Padding="22" RowDefinitions="*,Auto">
+
+        <!-- Góc trên trái -->
+        <Frame BackgroundColor="Transparent"
+               CornerRadius="120"
+               WidthRequest="220"
+               HeightRequest="220"
+               HorizontalOptions="Start"
+               VerticalOptions="Start"
+               Margin="-80,-80,0,0"
+               HasShadow="False">
+            <Frame.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#90CAF9" Offset="0"/>
+                    <GradientStop Color="#42A5F5" Offset="1"/>
+                </LinearGradientBrush>
+            </Frame.Background>
+        </Frame>
+
+        <!-- Góc dưới phải -->
+        <Frame BackgroundColor="Transparent"
+               CornerRadius="140"
+               WidthRequest="260"
+               HeightRequest="260"
+               HorizontalOptions="End"
+               VerticalOptions="End"
+               Margin="0,0,-100,-100"
+               HasShadow="False">
+            <Frame.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#A5D6A7" Offset="0"/>
+                    <GradientStop Color="#66BB6A" Offset="1"/>
+                </LinearGradientBrush>
+            </Frame.Background>
+        </Frame>
+
+        <!-- ===== CARD LOGIN ===== -->
+        <Frame CornerRadius="28"
+               Padding="26"
+               BackgroundColor="White"
+               HasShadow="True"
+               VerticalOptions="Center"
+               ZIndex="10">
+
+            <!-- GRID BỌC TOÀN BỘ + OVERLAY -->
+            <Grid>
+
+                <!-- ===== UI LOGIN ===== -->
+                <VerticalStackLayout Spacing="22">
+
+                    <Label Text="WELCOME BACK"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           TextColor="#1E88E5"
+                           HorizontalOptions="Center"/>
+
+                    <Label Text="TRAN TOAN TECHNICAL SERVICES TRADING CO., LTD"
+                           FontSize="11"
+                           HorizontalTextAlignment="Center"
+                           TextColor="#777"/>
+
+                    <Image Source="logoct.png"
+                           HeightRequest="110"
+                           HorizontalOptions="Center"
+                           Margin="0,10,0,0"/>
+
+                    <!-- Username -->
+                    <Frame CornerRadius="20"
+                           Padding="14,10"
+                           BackgroundColor="#F5F7FB"
+                           BorderColor="#E0E6ED">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label Text="👤" FontSize="16" VerticalOptions="Center"/>
+                            <Entry x:Name="txtUsername"
+                                   Grid.Column="1"
+                                   Placeholder="Tên đăng nhập"
+                                   BackgroundColor="Transparent"
+                                   TextColor="Black"
+                                   PlaceholderColor="#999"/>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Password -->
+                    <Frame CornerRadius="20"
+                           Padding="14,10"
+                           BackgroundColor="#F5F7FB"
+                           BorderColor="#E0E6ED">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label Text="🔒" FontSize="16" VerticalOptions="Center"/>
+                            <Entry x:Name="txtPassword"
+                                   Grid.Column="1"
+                                   Placeholder="Mật khẩu"
+                                   IsPassword="True"
+                                   BackgroundColor="Transparent"
+                                   TextColor="Black"
+                                   PlaceholderColor="#999"/>
+                        </Grid>
+                    </Frame>
+
+                    <!-- Remember -->
+                    <Grid ColumnDefinitions="Auto,*">
+                        <CheckBox x:Name="chkRemember"
+                                  VerticalOptions="Center"
+                                  Color="#1E88E5"/>
+                        <Label Text="Ghi nhớ đăng nhập"
+                               Grid.Column="1"
+                               VerticalOptions="Center"
+                               TextColor="#555"/>
+                    </Grid>
+
+                    <!-- Buttons -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="14">
+                        <Button Text="ADMIN"
+                                Clicked="OnAdminLoginClicked"
+                                BackgroundColor="#FF6F61"
+                                TextColor="White"
+                                CornerRadius="24"
+                                HeightRequest="48"
+                                FontAttributes="Bold"/>
+
+                        <Button Text="NHÂN VIÊN"
+                                Clicked="OnEmployeeLoginClicked"
+                                BackgroundColor="#1E88E5"
+                                TextColor="White"
+                                CornerRadius="24"
+                                HeightRequest="48"
+                                FontAttributes="Bold"
+                                Grid.Column="1"/>
+                    </Grid>
+
+                    <Button Text="KHÁCH HÀNG"
+                            Clicked="OnCustomerClicked"
+                            BackgroundColor="#43A047"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            CornerRadius="26"
+                            HeightRequest="50"/>
+
+                    <Grid ColumnDefinitions="*,*">
+                        <Label Text="Đăng ký"
+                               TextColor="#1E88E5"
+                               FontAttributes="Bold">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnRegisterTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <Label Text="Quên mật khẩu?"
+                               Grid.Column="1"
+                               HorizontalOptions="End"
+                               TextColor="#757575">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnForgotPasswordTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+
+                </VerticalStackLayout>
+
+                <!-- ===== LOADING OVERLAY ===== -->
+                <Grid x:Name="LoadingOverlay"
+                      IsVisible="False"
+                      BackgroundColor="Transparent">
+
+                    <ActivityIndicator IsRunning="True"
+                                       Color="#1E88E5"
+                                       WidthRequest="50"
+                                       HeightRequest="50"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                </Grid>
+
+            </Grid>
+        </Frame>
+
+        <!-- Footer -->
+        <Label Grid.Row="1"
+               Text="© 2026 | Designed by Tran Van Huy"
+               FontSize="10"
+               TextColor="Gray"
+               HorizontalOptions="Center"
+               Margin="0,12,0,0"/>
+
+    </Grid>
+</ContentPage>

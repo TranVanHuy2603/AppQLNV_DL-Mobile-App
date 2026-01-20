@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AppQLNV_DL.ViewModels"
+             x:Class="AppQLNV_DL.Views.SettingsPage"
+             x:DataType="vm:SettingsViewModel"
+             Title="Cài đặt"
+             BackgroundColor="#F5F6F7">
+    <!-- Màu nền xám nhạt cực sang -->
+
+    <Grid RowDefinitions="*, Auto" Padding="20">
+
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="25">
+
+                <!-- Phần 1: Tài khoản -->
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="TÀI KHOẢN" FontSize="13" FontAttributes="Bold" TextColor="#7F8C8D" Margin="5,0"/>
+
+                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="White">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05"/>
+                        </Border.Shadow>
+
+                        <VerticalStackLayout>
+                            <!-- Dòng Đổi mật khẩu -->
+                            <Grid ColumnDefinitions="40, *, Auto" Padding="15" ColumnSpacing="10">
+                                <Label Text="🔐" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                <Label Grid.Column="1" Text="Đổi mật khẩu" VerticalOptions="Center" FontSize="15" TextColor="#2C3E50"/>
+                                <Label Grid.Column="2" Text="❯" TextColor="#BDC3C7" VerticalOptions="Center"/>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToAdminChangePasswordCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                            <BoxView HeightRequest="0.5" Color="#F0F0F0" Margin="50,0,0,0"/>
+
+                            <!-- Dòng Thông tin cá nhân -->
+                            <Grid ColumnDefinitions="40, *, Auto" Padding="15" ColumnSpacing="10">
+                                <Label Text="👤" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                <Label Grid.Column="1" Text="Thông tin cá nhân" VerticalOptions="Center" FontSize="15" TextColor="#2C3E50"/>
+                                <Label Grid.Column="2" Text="❯" TextColor="#BDC3C7" VerticalOptions="Center"/>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToProfileCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Phần 2: Tùy chỉnh (Giao diện) -->
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="TÙY CHỈNH" FontSize="13" FontAttributes="Bold" TextColor="#7F8C8D" Margin="5,0"/>
+
+                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="White" Padding="15">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05"/>
+                        </Border.Shadow>
+
+                        <Grid ColumnDefinitions="40, *, Auto" ColumnSpacing="10">
+                            <Label Text="🌙" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center"/>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                <Label Text="Chế độ tối" FontSize="15" TextColor="#2C3E50"/>
+                                <Label Text="Đang phát triển" FontSize="11" TextColor="#95A5A6"/>
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2" 
+                                    IsToggled="{Binding IsDarkModeEnabled}" 
+                                    OnColor="RoyalBlue"
+                                    VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- ============================ PHẦN MỚI: CÔNG TY ============================ -->
+                <VerticalStackLayout Spacing="10">
+
+                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="White">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05"/>
+                        </Border.Shadow>
+
+                        <VerticalStackLayout>
+                            <!-- Dòng Dịch vụ của công ty -->
+                            <Grid ColumnDefinitions="40, *, Auto" Padding="15" ColumnSpacing="10">
+                                <Label Text="⚙️" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                <Label Grid.Column="1" Text="Dịch vụ" VerticalOptions="Center" FontSize="15" TextColor="#2C3E50"/>
+                                <Label Grid.Column="2" Text="❯" TextColor="#BDC3C7" VerticalOptions="Center"/>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToCompanyServicesCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                            <BoxView HeightRequest="0.5" Color="#F0F0F0" Margin="50,0,0,0"/>
+
+                            <!-- Dòng Thiết bị của công ty -->
+                            <Grid ColumnDefinitions="40, *, Auto" Padding="15" ColumnSpacing="10">
+                                <Label Text="💻" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                <Label Grid.Column="1" Text="Thiết bị" VerticalOptions="Center" FontSize="15" TextColor="#2C3E50"/>
+                                <Label Grid.Column="2" Text="❯" TextColor="#BDC3C7" VerticalOptions="Center"/>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToCompanyEquipmentCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+                <!-- ============================================================================== -->
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Nút Đăng xuất kiểu hiện đại -->
+        <Button Grid.Row="1"
+                Text="Đăng xuất"
+                FontAttributes="Bold"
+                BackgroundColor="White"
+                TextColor="#E74C3C"
+                BorderColor="#E74C3C"
+                BorderWidth="1"
+                CornerRadius="12"
+                HeightRequest="55"
+                Command="{Binding LogoutCommand}"
+                HorizontalOptions="Fill" 
+                VerticalOptions="End"
+                Margin="0,10,0,0">
+            <Button.Shadow>
+                <Shadow Brush="#E74C3C" Offset="0,2" Radius="5" Opacity="0.1"/>
+            </Button.Shadow>
+        </Button>
+
+    </Grid>
+</ContentPage>

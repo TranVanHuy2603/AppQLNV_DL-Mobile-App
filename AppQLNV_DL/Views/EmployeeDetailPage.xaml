@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppQLNV_DL.Views.EmployeeDetailPage"
+             xmlns:viewmodels="clr-namespace:AppQLNV_DL.ViewModels"
+             Title="Hồ sơ nhân viên"
+             BackgroundColor="#F5F6FA">
+
+    <ScrollView>
+        <!-- Chỉ hiển thị khi có dữ liệu (giữ logic Converter của bạn) -->
+        <VerticalStackLayout Padding="25" Spacing="20" 
+                             IsVisible="{Binding CurrentEmployee, Converter={StaticResource IsNotNullConverter}}">
+
+            <!-- 1. KHỐI AVATAR -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,10,0,10">
+                <Border WidthRequest="120" 
+                        HeightRequest="120" 
+                        StrokeShape="RoundRectangle 60" 
+                        StrokeThickness="4"
+                        Stroke="White"
+                        BackgroundColor="White">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,5" Radius="15" Opacity="0.1"/>
+                    </Border.Shadow>
+
+                    <Image Source="{Binding CurrentEmployee.AvatarUrl, TargetNullValue='user_placeholder.png'}" 
+                           Aspect="AspectFill"
+                           Margin="0"/>
+                </Border>
+
+                <Label Text="{Binding CurrentEmployee.FullName}" 
+                       FontSize="24" 
+                       FontAttributes="Bold" 
+                       TextColor="#2C3E50" 
+                       HorizontalOptions="Center"/>
+                <Label Text="Nhân viên chính thức" 
+                       FontSize="14" 
+                       TextColor="RoyalBlue" 
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+            <!-- 2. KHỐI THÔNG TIN CHI TIẾT (CARD) -->
+            <Border StrokeShape="RoundRectangle 15" 
+                    StrokeThickness="0" 
+                    BackgroundColor="White" 
+                    Padding="20">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Offset="0,2" Radius="10" Opacity="0.05"/>
+                </Border.Shadow>
+
+                <VerticalStackLayout Spacing="15">
+                    <!-- Dòng CCCD -->
+                    <Grid ColumnDefinitions="40, *">
+                        <Label Text="🆔" FontSize="20" VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Số CCCD" FontSize="12" TextColor="Gray"/>
+                            <Label Text="{Binding CurrentEmployee.CitizenId}" FontSize="16" FontAttributes="Bold" TextColor="#2D3436"/>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <BoxView HeightRequest="1" Color="#F0F0F0"/>
+
+                    <!-- Dòng SĐT -->
+                    <Grid ColumnDefinitions="40, *">
+                        <Label Text="📞" FontSize="20" VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Số điện thoại" FontSize="12" TextColor="Gray"/>
+                            <Label Text="{Binding CurrentEmployee.PhoneNumber}" FontSize="16" FontAttributes="Bold" TextColor="#2D3436"/>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <BoxView HeightRequest="1" Color="#F0F0F0"/>
+
+                    <!-- Dòng Trạng thái (Ví dụ thêm) -->
+                    <Grid ColumnDefinitions="40, *">
+                        <Label Text="🛡️" FontSize="20" VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Trạng thái tài khoản" FontSize="12" TextColor="Gray"/>
+                            <Label Text="Đang hoạt động" FontSize="16" FontAttributes="Bold" TextColor="#27AE60"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- 3. KHỐI NÚT BẤM HÀNH ĐỘNG -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="15" Margin="0,10,0,20">
+                <!-- Nút Sửa -->
+                <Button Grid.Column="0" 
+                        Text="CHỈNH SỬA" 
+                        FontSize="14" 
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        BackgroundColor="RoyalBlue"
+                        HeightRequest="55"
+                        CornerRadius="12"
+                        Command="{Binding EditCommand}">
+                    <Button.Shadow>
+                        <Shadow Brush="RoyalBlue" Offset="0,4" Radius="8" Opacity="0.3"/>
+                    </Button.Shadow>
+                </Button>
+
+                <!-- Nút Xóa -->
+                <Button Grid.Column="1" 
+                        Text="XÓA HỒ SƠ" 
+                        FontSize="14" 
+                        FontAttributes="Bold"
+                        TextColor="#E74C3C"
+                        BackgroundColor="White"
+                        BorderColor="#E74C3C"
+                        BorderWidth="1.5"
+                        HeightRequest="55"
+                        CornerRadius="12"
+                        Command="{Binding DeleteCommand}">
+                </Button>
+            </Grid>
+            <Button Text="RESET MẬT KHẨU"
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    BackgroundColor="#E74C3C"
+                    HeightRequest="55"
+                    CornerRadius="12"
+                    Command="{Binding ResetPasswordCommand}">
+                <Button.Shadow>
+                    <Shadow Brush="#E74C3C" Offset="0,4" Radius="8" Opacity="0.3"/>
+                </Button.Shadow>
+            </Button>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

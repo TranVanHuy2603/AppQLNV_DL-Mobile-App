@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AppQLNV_DL.ViewModels"
+             x:Class="AppQLNV_DL.Views.EmployeeEditPage"
+             x:DataType="vm:EmployeeEditViewModel"
+             Title="Chỉnh sửa">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="12" Padding="25" IsVisible="{Binding CurrentEmployee, Converter={StaticResource IsNotNullConverter}}">
+
+            <Label Text="Họ và Tên" FontSize="15" />
+            <Entry Text="{Binding CurrentEmployee.FullName, Mode=TwoWay}" 
+                   FontAttributes="Bold" 
+                   FontSize="20" 
+                   Placeholder="Nhập họ và tên" />
+
+            <Label Text="Số điện thoại" FontSize="15" />
+            <Entry Text="{Binding CurrentEmployee.PhoneNumber, Mode=TwoWay}" 
+                   FontAttributes="Bold" 
+                   FontSize="20" 
+                   Placeholder="Nhập số điện thoại" 
+                   Keyboard="Telephone" />
+
+            <Label Text="Số CCCD" FontSize="15" />
+            <Entry Text="{Binding CurrentEmployee.CitizenId, Mode=TwoWay}" 
+                   FontAttributes="Bold" 
+                   FontSize="20" 
+                   Placeholder="Nhập số CCCD" 
+                   Keyboard="Numeric" />
+
+            <Button Text="Lưu thay đổi"
+                    Command="{Binding SaveChangesCommand}"
+                    BackgroundColor="RoyalBlue"
+                    TextColor="White"
+                    FontSize="20"
+                    HorizontalOptions="Fill" 
+                    Margin="0,20,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

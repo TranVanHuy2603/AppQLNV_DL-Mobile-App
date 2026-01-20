@@ -1,0 +1,41 @@
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:AppQLNV_DL.Views"
+       x:Class="AppQLNV_DL.EmployeeShell"
+       Shell.BackgroundColor="#007AFF">
+
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Color x:Key="PrimaryColor">RoyalBlue</Color>
+            <Color x:Key="UnselectedColor">Black</Color>
+
+            <Style TargetType="TabBar">
+                <Setter Property="Shell.BackgroundColor" Value="RoyalBlue"/>
+                <Setter Property="Shell.TabBarBackgroundColor" Value="White"/>
+
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource UnselectedColor}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource PrimaryColor}" />
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <TabBar>
+        <Tab Title="Trang chủ" Icon="home.png">
+            <ShellContent ContentTemplate="{DataTemplate local:EmployeeHomePage}" />
+        </Tab>
+
+        <Tab Title="Công Việc" Icon="setting.png">
+            <ShellContent ContentTemplate="{DataTemplate local:EmployeeJobPage}" />
+        </Tab>
+
+        <Tab Title="Nhân sự" Icon="twoper.png">
+            <ShellContent ContentTemplate="{DataTemplate local:FullEmployeeListPage}" />
+        </Tab>
+
+        <Tab Title="Cài đặt" Icon="setting.png">
+            <ShellContent ContentTemplate="{DataTemplate local:EmployeeSettingsPage}" />
+        </Tab>
+
+    </TabBar>
+</Shell>

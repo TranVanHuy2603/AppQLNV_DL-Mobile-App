@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AppQLNV_DL.ViewModels"
+             x:Class="AppQLNV_DL.Views.DevicePage"
+             Title="Thiết bị"
+             BackgroundColor="#F5F6F7"
+             Padding="0">
+
+    <ContentPage.BindingContext>
+        <vm:DeviceViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, Auto, *" RowSpacing="0">
+
+        <ActivityIndicator Grid.Row="0"
+                           IsRunning="{Binding IsLoading}"
+                           IsVisible="{Binding IsLoading}"
+                           Color="#3498DB"
+                           HeightRequest="4"
+                           HorizontalOptions="FillAndExpand"
+                           Margin="0,0,0,10"/>
+
+        <Grid Grid.Row="1" ColumnSpacing="15" Padding="20,10,20,10" BackgroundColor="#F0F2F5" >
+            <!-- Thêm CornerRadius cho Grid này -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Entry Grid.Column="0"
+                   Placeholder="Nhập tên thiết bị"
+                   Text="{Binding NewDeviceName}"
+                   HeightRequest="45"
+                   BackgroundColor="White"
+                   PlaceholderColor="#7F8C8D"
+                   TextColor="#2C3E50"
+                   ClearButtonVisibility="WhileEditing">
+                <Entry.Shadow>
+                    <Shadow Brush="Black" Offset="5,5" Radius="10" Opacity="0.1"/>
+                </Entry.Shadow>
+            </Entry>
+
+            <Button Grid.Column="1"
+                    Text="Thêm"
+                    Command="{Binding AddDeviceCommand}"
+                    BackgroundColor="#3498DB"
+                    TextColor="White"
+                    CornerRadius="8"
+                    Padding="15,0"
+                    HeightRequest="45"
+                    FontSize="16">
+                <Button.Shadow>
+                    <Shadow Brush="Black" Offset="5,5" Radius="10" Opacity="0.1"/>
+                </Button.Shadow>
+            </Button>
+        </Grid>
+
+        <!-- CollectionView hiển thị danh sách thiết bị giờ ở Grid.Row="2" -->
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Devices}"
+                        SelectionMode="None"
+                        Margin="20,10,20,0">
+            <!-- Thay đổi Margin: không có margin dưới để kéo dài hết -->
+            <!-- Bỏ VerticalOptions="FillAndExpand" vì Grid.Row="*" đã đảm bảo điều này -->
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                    <Label Text="Chưa có thiết bị nào."
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           FontSize="16"
+                           TextColor="#7F8C8D"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="0.5" BackgroundColor="White" Margin="0,5" Padding="1">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.08"/>
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="*, Auto" Padding="7">
+                            <Label Grid.Column="0"
+                                   Text="{Binding DeviceName}"
+                                   FontAttributes="Bold"
+                                   FontSize="16"
+                                   TextColor="#2C3E50"
+                                   VerticalOptions="Center"/>
+                            <Button Grid.Column="1"
+                                    Text="Xóa"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DeviceViewModel}}, Path=DeleteDeviceCommand}"
+                                    CommandParameter="{Binding .}"
+                                    BackgroundColor="#E74C3C"
+                                    TextColor="White"
+                                    CornerRadius="6"
+                                    Padding="10.5"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="End"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

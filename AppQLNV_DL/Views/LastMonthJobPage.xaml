@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AppQLNV_DL.ViewModels"
+             xmlns:models="clr-namespace:AppQLNV_DL.Models" 
+             x:Class="AppQLNV_DL.Views.LastMonthJobPage"
+             x:DataType="vm:LastMonthJobViewModel"
+             Title="Công việc"
+             BackgroundColor="#F8F9FA">
+    <!-- Thêm màu nền nhạt để các Border nổi lên -->
+
+    <!-- Dùng Grid để chia màn hình thành 2 phần: Header (Auto) và List (*) -->
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- 1. THẺ HIỂN THỊ TỔNG SỐ (Cố định ở đầu trang) -->
+        <Border Grid.Row="0" 
+                Margin="15,15,15,5" 
+                Padding="5" 
+                StrokeShape="RoundRectangle 12"
+                StrokeThickness="0"
+                BackgroundColor="White">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,2" Opacity="0.05" Radius="5"/>
+            </Border.Shadow>
+
+            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                <Label Text="📊" FontSize="20" VerticalOptions="Center"/>
+                <Label Text="Công việc trong tháng:" 
+                       FontSize="15" 
+                       TextColor="Gray" 
+                       VerticalOptions="Center"/>
+                <Label Text="{Binding Total}" 
+                       FontSize="22" 
+                       FontAttributes="Bold" 
+                       TextColor="RoyalBlue" 
+                       VerticalOptions="Center"/>
+                <Label Text="việc" 
+                       FontSize="15" 
+                       TextColor="Gray" 
+                       VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+        </Border>
+
+        <!-- 2. DANH SÁCH CÔNG VIỆC (Cuộn bên dưới) -->
+        <RefreshView Grid.Row="1" 
+                     IsRefreshing="{Binding IsBusy}" 
+                     Command="{Binding LoadMonthlyJobsCommand}"
+                     RefreshColor="RoyalBlue">
+
+            <CollectionView ItemsSource="{Binding Jobs}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Job">
+                        <Border StrokeShape="RoundRectangle 12"
+                                StrokeThickness="0.5"
+                                Stroke="#D0D0D0"
+                                BackgroundColor="White"
+                                Padding="6"
+                                Margin="10,0,10,12">
+                            <Border.Shadow>
+                                <Shadow Brush="Black" Offset="2,2" Opacity="0.05" Radius="5"/>
+                            </Border.Shadow>
+
+                            <VerticalStackLayout Spacing="10">
+                                <!-- 1. Tiêu đề địa điểm -->
+                                <Label Text="{Binding Location}" 
+                                       FontSize="20" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#2C3E50" 
+                                       LineBreakMode="TailTruncation"/>
+
+                                <!-- 2. Hàng Badges -->
+                                <HorizontalStackLayout Spacing="8">
+                                    <Border BackgroundColor="#E9F5EA" Stroke="#C8E6C9" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="10,4">
+                                        <Label Text="{Binding ServiceName}" TextColor="#2E7D32" FontSize="13" FontAttributes="Bold"/>
+                                    </Border>
+                                    <Border BackgroundColor="#E3F2FD" Stroke="#BBDEFB" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="10,4">
+                                        <Label Text="{Binding DeviceName}" TextColor="#1976D2" FontSize="13" FontAttributes="Bold"/>
+                                    </Border>
+                                </HorizontalStackLayout>
+
+                                <!-- 3. Chi tiết -->
+                                <VerticalStackLayout Spacing="6" Margin="0,5,0,0">
+                                    <HorizontalStackLayout Spacing="12">
+                                        <Label Text="👤" FontSize="16" WidthRequest="20"/>
+                                        <Label Text="Nhân viên:" TextColor="#7F8C8D" FontSize="15"/>
+                                        <Label Text="{Binding EmployeeName}" TextColor="#2C3E50" FontSize="16" FontAttributes="Bold"/>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="12">
+                                        <Label Text="📞" FontSize="16" WidthRequest="20"/>
+                                        <Label Text="Liên hệ:" TextColor="#7F8C8D" FontSize="15"/>
+                                        <Label Text="{Binding CustomerPhone}" TextColor="#4169E1" FontSize="16"/>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="12">
+                                        <Label Text="⏰" FontSize="16" WidthRequest="20"/>
+                                        <Label Text="Thời gian giao:" TextColor="#7F8C8D" FontSize="15"/>
+                                        <Label Text="{Binding AssignedDate, StringFormat='{0:dd/MM/yyyy HH:mm}'}" TextColor="#555" FontSize="15"/>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout Spacing="12">
+                                        <Label Text="🏁" FontSize="16" WidthRequest="20"/>
+                                        <Label Text="Hoàn thành:" TextColor="#7F8C8D" FontSize="15"/>
+                                        <Label Text="{Binding CompletedDate, StringFormat='{0:dd/MM/yyyy HH:mm}'}" 
+                                               TextColor="#2E7D32" FontSize="15" FontAttributes="Bold"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

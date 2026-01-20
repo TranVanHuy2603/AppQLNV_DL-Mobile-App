@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppQLNV_DL.Views.EmployeeListPage"
+             xmlns:viewmodels="clr-namespace:AppQLNV_DL.ViewModels"
+             Title="Thành viên phòng ban"
+             BackgroundColor="#F5F6FA">
+
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- THANH TÌM KIẾM -->
+        <Border Grid.Row="0" Margin="15,10,15,5" StrokeShape="RoundRectangle 20" StrokeThickness="0" BackgroundColor="White" HeightRequest="45">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05"/>
+            </Border.Shadow>
+            <Grid ColumnDefinitions="40, *">
+                <Label Text="🔍" VerticalOptions="Center" HorizontalOptions="Center" Margin="5,0,0,0"/>
+                <Entry Grid.Column="1" Placeholder="Tìm kiếm nhân viên..." FontSize="14" VerticalOptions="Center" TextColor="#2D3436"/>
+            </Grid>
+        </Border>
+
+        <!-- DANH SÁCH -->
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}" RefreshColor="RoyalBlue">
+            <CollectionView ItemsSource="{Binding Employees}" SelectionMode="None" Margin="10,5">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="5,6" Padding="12" StrokeShape="RoundRectangle 15" StrokeThickness="0" BackgroundColor="White">
+                            <Border.Shadow>
+                                <Shadow Brush="Black" Offset="0,3" Radius="8" Opacity="0.06"/>
+                            </Border.Shadow>
+
+                            <Grid ColumnDefinitions="55, *, Auto" ColumnSpacing="12">
+                                <!-- 1. Avatar -->
+                                <Border Grid.Column="0" WidthRequest="50" HeightRequest="50" StrokeShape="RoundRectangle 25" StrokeThickness="0" BackgroundColor="#E3F2FD" VerticalOptions="Center">
+                                    <Label Text="👤" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Border>
+
+                                <!-- 2. Thông tin -->
+                                <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                    <Label Text="{Binding FullName}" FontAttributes="Bold" FontSize="16" TextColor="#2D3436"/>
+                                    <HorizontalStackLayout Spacing="5" Opacity="0.7">
+                                        <Label Text="📞" FontSize="11" VerticalOptions="Center"/>
+                                        <Label Text="{Binding PhoneNumber}" TextColor="#636E72" FontSize="13" VerticalOptions="Center"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+
+                                <!-- 3. Cột chứa 2 Nút (GỌI & CHI TIẾT) -->
+                                <HorizontalStackLayout Grid.Column="2" Spacing="8" VerticalOptions="Center">
+
+                                    <!-- Nút Gọi (Màu xanh lá) -->
+                                    <Button Text="Gọi"
+                                            FontSize="11"
+                                            FontAttributes="Bold"
+                                            HeightRequest="34"
+                                            Padding="12,0"
+                                            TextColor="White"
+                                            BackgroundColor="#27AE60" 
+                                            CornerRadius="17"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:EmployeeListViewModel}}, Path=CallEmployeeCommand}"
+                                            CommandParameter="{Binding PhoneNumber}">
+                                    </Button>
+
+                                    <!-- Nút Chi tiết (Màu xanh dương) -->
+                                    <Button Text="Chi tiết"
+                                            FontSize="11"
+                                            FontAttributes="Bold"
+                                            HeightRequest="34"
+                                            Padding="12,0"
+                                            TextColor="White"
+                                            BackgroundColor="RoyalBlue" 
+                                            CornerRadius="17"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EmployeeSelectedCommand}"
+                                            CommandParameter="{Binding .}">
+                                    </Button>
+
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" Color="RoyalBlue" />
+    </Grid>
+</ContentPage>

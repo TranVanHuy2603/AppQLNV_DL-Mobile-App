@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AppQLNV_DL.ViewModels"
+             x:Class="AppQLNV_DL.Views.CustomerSettingsPage"
+             x:DataType="vm:CustomerSettingsViewModel"
+             Title="Cài đặt"
+             BackgroundColor="#F5F6F7">
+    <!-- Màu nền xám nhạt cực sang -->
+
+    <Grid RowDefinitions="*, Auto" Padding="20">
+
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="25">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="TÙY CHỈNH" FontSize="13" FontAttributes="Bold" TextColor="#7F8C8D" Margin="5,0"/>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Nút Đăng xuất kiểu hiện đại -->
+        <Button Grid.Row="1"
+                Text="Thoát"
+                FontAttributes="Bold"
+                BackgroundColor="White"
+                TextColor="#E74C3C"
+                BorderColor="#E74C3C"
+                BorderWidth="1"
+                CornerRadius="12"
+                HeightRequest="55"
+                Command="{Binding LogoutCommand}"
+                HorizontalOptions="Fill" 
+                VerticalOptions="End"
+                Margin="0,10,0,0">
+            <Button.Shadow>
+                <Shadow Brush="#E74C3C" Offset="0,2" Radius="5" Opacity="0.1"/>
+            </Button.Shadow>
+        </Button>
+
+    </Grid>
+</ContentPage>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AppQLNV_DL.ViewModels"
+             x:Class="AppQLNV_DL.Views.StatisticalPage"
+             x:DataType="vm:StatisticalViewModel"
+             Title="Thống kê hệ thống"
+             BackgroundColor="#F5F6FA">
+
+    <ContentPage.BindingContext>
+        <vm:StatisticalViewModel />
+    </ContentPage.BindingContext>
+
+    <!-- Thêm RefreshView ở đây -->
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+        <ScrollView>
+            <VerticalStackLayout Spacing="20" Padding="20">
+
+                <!-- TIÊU ĐỀ TRANG -->
+                <VerticalStackLayout Spacing="5" Margin="0,10,0,10">
+                    <Label Text="Báo cáo công việc"
+                           FontSize="26"
+                           FontAttributes="Bold"
+                           TextColor="#2C3E50"/>
+                    <Label Text="Theo dõi hiệu suất làm việc của bạn"
+                           FontSize="14"
+                           TextColor="Gray"/>
+                </VerticalStackLayout>
+
+                <!-- CÁC THẺ TÓM TẮT NHANH (STATS CARDS) -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                    <!-- Thẻ Tổng công việc -->
+                    <Border Grid.Column="0"
+                            StrokeShape="RoundRectangle 15"
+                            BackgroundColor="White"
+                            Padding="15"
+                            StrokeThickness="0">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Opacity="0.05" Radius="5"/>
+                        </Border.Shadow>
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="💼" FontSize="24"/>
+                            <Label Text="Tổng việc" FontSize="14" TextColor="Gray"/>
+                            <Label Text="{Binding TotalJobsCount}" FontSize="20" FontAttributes="Bold" TextColor="#34495E"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Thẻ Đang xử lý -->
+                    <Border Grid.Column="1"
+                            StrokeShape="RoundRectangle 15"
+                            BackgroundColor="White"
+                            Padding="15"
+                            StrokeThickness="0">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Opacity="0.05" Radius="5"/>
+                        </Border.Shadow>
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="⚡" FontSize="24"/>
+                            <Label Text="Đang làm" FontSize="14" TextColor="Gray"/>
+                            <Label Text="{Binding ProcessingJobsCount}" FontSize="20" FontAttributes="Bold" TextColor="#E67E22"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- PHẦN CHÍNH: NÚT CHUYỂN TRANG DẠNG CARD LỚN -->
+                <Border StrokeShape="RoundRectangle 20"
+                        BackgroundColor="White"
+                        Padding="0"
+                        StrokeThickness="0">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,5" Opacity="0.1" Radius="10"/>
+                    </Border.Shadow>
+
+                    <VerticalStackLayout>
+                        <VerticalStackLayout Padding="20" Spacing="10">
+                            <Label Text="Lịch sử Hoàn thành"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#2C3E50"/>
+                            <Label Text="Xem lại toàn bộ danh sách các công việc đã được xử lý xong trong tháng này."
+                                   FontSize="13"
+                                   TextColor="Gray"
+                                   LineBreakMode="WordWrap"/>
+
+                            <Button Text="CÔNG VIỆC THÁNG NÀY"
+                                    Command="{Binding GoToMonthlyPageCommand}"
+                                    BackgroundColor="RoyalBlue"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    CornerRadius="10"
+                                    HeightRequest="50"
+                                    Margin="0,10,0,0">
+                            </Button>
+
+                            <Button Text="CÔNG VIỆC THÁNG TRƯỚC"
+                                    Command="{Binding GoToLastMonthJobPageCommand}"
+                                    BackgroundColor="RoyalBlue"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    CornerRadius="10"
+                                    HeightRequest="50"
+                                    Margin="0,10,0,0">
+                            </Button>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AppQLNV_DL.ViewModels"
+             xmlns:models="clr-namespace:AppQLNV_DL.Models"
+             xmlns:calendar="clr-namespace:Syncfusion.Maui.Calendar;assembly=Syncfusion.Maui.Calendar"
+             x:Class="AppQLNV_DL.Views.HomePage"
+             x:DataType="vm:HomePageViewModel"
+             Title="Trang chủ"
+             BackgroundColor="#F5F6FA">
+
+    <ContentPage.BindingContext>
+        <vm:HomePageViewModel />
+    </ContentPage.BindingContext>
+
+    <!-- Thêm RefreshView để vuốt để tải lại dữ liệu -->
+    <RefreshView IsRefreshing="{Binding IsRefreshing}"
+                 Command="{Binding RefreshCommand}"
+                 RefreshColor="RoyalBlue">
+
+        <ScrollView>
+            <VerticalStackLayout Spacing="25" Padding="20">
+
+                <!-- 1. PHẦN CHÀO MỪNG (HEADER) - GIỮ NGUYÊN -->
+                <Grid ColumnDefinitions="*, Auto" VerticalOptions="Start">
+                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                        <Label Text="{Binding GreetingText}" FontSize="19" TextColor="#7F8C8D" />
+                        <Label Text="{Binding StaffName}" FontSize="28" FontAttributes="Bold" TextColor="#2D3436"/>
+                        <HorizontalStackLayout Spacing="5">
+                            <Label Text="Thời tiết:" FontSize="14" TextColor="Gray"/>
+                            <Label Text="{Binding WeatherText}" FontSize="14" TextColor="RoyalBlue" FontAttributes="Bold"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <Border Grid.Column="1" WidthRequest="60" HeightRequest="60" StrokeShape="RoundRectangle 30" StrokeThickness="0" BackgroundColor="White">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,3" Radius="10" Opacity="0.1"/>
+                        </Border.Shadow>
+                        <Image Source="logoct.png" Aspect="AspectFit" Margin="8"/>
+                    </Border>
+                </Grid>
+
+                <!-- 2. DANH SÁCH VIỆC CHỜ GIAO (MỚI) -->
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Công việc chờ xác nhận" FontSize="18" FontAttributes="Bold" TextColor="#E67E22" Margin="5,0"/>
+
+                    <CollectionView ItemsSource="{Binding Jobs}" EmptyView="Không có công việc nào đang chờ">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Job">
+                                <Border StrokeShape="RoundRectangle 15" StrokeThickness="0" BackgroundColor="White" Padding="15" Margin="0,0,0,10">
+                                    <Border.Shadow>
+                                        <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05"/>
+                                    </Border.Shadow>
+
+                                    <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
+                                        <!-- Phần thông tin bên trái -->
+                                        <VerticalStackLayout Spacing="6">
+                                            <Label Text="{Binding Location}" FontAttributes="Bold" FontSize="16" TextColor="#2C3E50"/>
+
+                                            <HorizontalStackLayout Spacing="10">
+                                                <Border BackgroundColor="#E8F5E9" Padding="8,2" StrokeShape="RoundRectangle 5">
+                                                    <Label Text="{Binding ServiceName}" FontSize="12" TextColor="#2E7D32" FontAttributes="Bold"/>
+                                                </Border>
+
+                                                <Border BackgroundColor="#E3F2FD" Padding="8,2" StrokeShape="RoundRectangle 5">
+                                                    <Label Text="{Binding DeviceName}" FontSize="12" TextColor="#1565C0" FontAttributes="Bold"/>
+                                                </Border>
+                                            </HorizontalStackLayout>
+
+                                            <Label Text="{Binding Note}" FontSize="13" TextColor="#7F8C8D" MaxLines="2" />
+
+                                            <HorizontalStackLayout Spacing="5">
+                                                <Label Text="📞" FontSize="12" VerticalOptions="Center"/>
+                                                <Label Text="{Binding CustomerPhone}" FontSize="12" TextColor="RoyalBlue" FontAttributes="Bold" VerticalOptions="Center"/>
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+
+                                        <!-- Cột các nút bấm bên phải -->
+                                        <VerticalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
+                                            <!-- Nút GỌI ĐIỆN -->
+                                                <Button Text="Liên hệ" 
+                                                        FontSize="11" 
+                                                        FontAttributes="Bold"
+                                                        HeightRequest="38"
+                                                        WidthRequest="75"
+                                                        BackgroundColor="#27AE60"
+                                                        TextColor="White"
+                                                        CornerRadius="8"
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}, Path=CallCustomerCommand}"
+                                                        CommandParameter="{Binding .}"/>
+
+                                                                                    <!-- Nút GIAO VIỆC -->
+                                                 <Button Text="Xác nhận" 
+                                                        FontSize="11" 
+                                                        FontAttributes="Bold"
+                                                        HeightRequest="38"
+                                                        WidthRequest="75"
+                                                        BackgroundColor="#FF9F43"
+                                                        TextColor="White"
+                                                        CornerRadius="8"
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}, Path=AssignJobCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <!-- 3. LỊCH LÀM VIỆC - GIỮ NGUYÊN -->
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Lịch tháng này" FontSize="18" FontAttributes="Bold" TextColor="#34495E" Margin="5,0"/>
+                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 20" StrokeThickness="0" Padding="10">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,10" Radius="20" Opacity="0.08"/>
+                        </Border.Shadow>
+                        <calendar:SfCalendar View="Month" HeightRequest="350" TodayHighlightBrush="RoyalBlue" SelectedDate="{Binding CurrentDate}"/>
+                    </Border>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

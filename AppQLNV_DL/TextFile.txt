@@ -1,0 +1,5 @@
+﻿https://arlinda-rimy-andria.ngrok-free.dev/swagger
+
+ngrok config add-authtoken 36v6Z2BgAj9N2iTcHbToNdOnPom_WA35qyAQSeLZfXuomDqe
+
+ngrok http https://localhost:7007

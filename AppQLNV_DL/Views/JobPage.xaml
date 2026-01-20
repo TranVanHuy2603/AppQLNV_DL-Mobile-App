@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AppQLNV_DL.ViewModels"
+             xmlns:models="clr-namespace:AppQLNV_DL.Models"
+             x:Class="AppQLNV_DL.Views.JobPage"
+             x:DataType="vm:JobViewModel"
+             Title="Danh sách Công việc">
+
+    <Grid BackgroundColor="#F8F9FA">
+        <RefreshView IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshCommand}"
+                     RefreshColor="RoyalBlue">
+
+            <CollectionView ItemsSource="{Binding Jobs}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Job">
+                        <Border StrokeShape="RoundRectangle 12" 
+                                StrokeThickness="0.5" 
+                                Stroke="#D0D0D0"
+                                BackgroundColor="White" 
+                                Padding="15" 
+                                Margin="0,0,0,12">
+
+                            <Border.Shadow>
+                                <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.08"/>
+                            </Border.Shadow>
+
+                            <!-- GRID CHIA CỘT: TRÁI (THÔNG TIN), PHẢI (NÚT) - Tăng cột nút lên 85 để đủ chữ -->
+                            <Grid ColumnDefinitions="*, 85" ColumnSpacing="10">
+
+                                <!-- CỘT TRÁI: THÔNG TIN CHI TIẾT -->
+                                <VerticalStackLayout Grid.Column="0" Spacing="6">
+
+                                    <!-- ĐỊA ĐIỂM -->
+                                    <Label Text="{Binding Location}" 
+                                           FontSize="20" 
+                                           FontAttributes="Bold" 
+                                           TextColor="#1A252F"
+                                           LineBreakMode="WordWrap"/>
+
+                                    <!-- BADGES -->
+                                    <HorizontalStackLayout Spacing="6">
+                                        <Border BackgroundColor="#E9F5EA" Padding="10,4" StrokeShape="RoundRectangle 6">
+                                            <Label Text="{Binding ServiceName}" FontSize="13" TextColor="#2E7D32" FontAttributes="Bold"/>
+                                        </Border>
+                                        <Border BackgroundColor="#E3F2FD" Padding="10,4" StrokeShape="RoundRectangle 6">
+                                            <Label Text="{Binding DeviceName}" FontSize="13" TextColor="#1565C0" FontAttributes="Bold"/>
+                                        </Border>
+                                    </HorizontalStackLayout>
+
+                                    <!-- KHỐI CHI TIẾT KÈM NHÃN CHỮ -->
+                                    <VerticalStackLayout Spacing="5" Margin="0,5">
+
+                                        <!-- Dòng Nhân viên -->
+                                        <HorizontalStackLayout Spacing="8">
+                                            <Label Text="👤" FontSize="18" VerticalOptions="Center" WidthRequest="22"/>
+                                            <Label Text="Nhân viên:" FontSize="15" TextColor="Gray" VerticalOptions="Center"/>
+                                            <Label Text="{Binding EmployeeName}" FontSize="16" FontAttributes="Bold" TextColor="#34495E" VerticalOptions="Center"/>
+                                        </HorizontalStackLayout>
+
+                                        <!-- Dòng Liên hệ -->
+                                        <HorizontalStackLayout Spacing="8">
+                                            <Label Text="📞" FontSize="18" VerticalOptions="Center" WidthRequest="22"/>
+                                            <Label Text="Liên hệ:" FontSize="15" TextColor="Gray" VerticalOptions="Center"/>
+                                            <Label Text="{Binding CustomerPhone}" FontSize="17" TextColor="#4169E1" FontAttributes="Bold" VerticalOptions="Center"/>
+                                        </HorizontalStackLayout>
+
+                                        <!-- Dòng Thời gian -->
+                                        <HorizontalStackLayout Spacing="8">
+                                            <Label Text="⏰" FontSize="18" VerticalOptions="Center" WidthRequest="22"/>
+                                            <Label Text="Thời gian:" FontSize="15" TextColor="Gray" VerticalOptions="Center"/>
+                                            <Label Text="{Binding AssignedDate, StringFormat='{0:dd/MM/yyyy HH:mm}'}" FontSize="15" TextColor="#555" VerticalOptions="Center"/>
+                                        </HorizontalStackLayout>
+
+                                        <!-- Dòng Ghi chú -->
+                                        <HorizontalStackLayout Spacing="8">
+                                            <Label Text="📝" FontSize="18" VerticalOptions="Start" WidthRequest="22"/>
+                                            <Label VerticalOptions="Start">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="Ghi chú: " FontSize="15" TextColor="Gray" />
+                                                        <Span Text="{Binding Note, TargetNullValue='Không có'}" FontSize="15" TextColor="#444" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+
+                                <!-- CỘT PHẢI: CÁC NÚT THAO TÁC -->
+                                <VerticalStackLayout Grid.Column="1" 
+                                                     Spacing="18" 
+                                                     VerticalOptions="Center">
+
+                                    <Button Text="Liên hệ" 
+                                            FontSize="12" 
+                                            HeightRequest="30"
+                                            Padding="0"
+                                            BackgroundColor="#27AE60" 
+                                            TextColor="White" 
+                                            CornerRadius="5"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:JobViewModel}}, Path=CallCustomerCommand}"
+                                            CommandParameter="{Binding .}" />
+
+                                    <Button Text="Bản đồ" 
+                                            FontSize="12" 
+                                            HeightRequest="30"
+                                            Padding="0"
+                                            BackgroundColor="#E67E22" 
+                                            TextColor="White" 
+                                            CornerRadius="5"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:JobViewModel}}, Path=GoToLocationCommand}"
+                                            CommandParameter="{Binding .}" />
+
+                                    <Button Text="Xong" 
+                                            FontSize="12" 
+                                            HeightRequest="30"
+                                            Padding="0"
+                                            BackgroundColor="RoyalBlue" 
+                                            TextColor="White" 
+                                            CornerRadius="5"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:JobViewModel}}, Path=CompleteJobCommand}"
+                                            CommandParameter="{Binding .}" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- NÚT THÊM MỚI (+) -->
+        <Button Text="+" FontSize="30" WidthRequest="60" HeightRequest="60"
+                BackgroundColor="RoyalBlue" TextColor="White"
+                HorizontalOptions="End" VerticalOptions="End"
+                Margin="20" CornerRadius="30"
+                Command="{Binding AddJobCommand}" />
+
+        <!-- HIỆU ỨNG TẢI TRANG -->
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                           VerticalOptions="Center" HorizontalOptions="Center" Color="RoyalBlue" />
+    </Grid>
+</ContentPage>

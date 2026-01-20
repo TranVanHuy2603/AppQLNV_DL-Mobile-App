@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppQLNV_DL.MainPage"
+             BackgroundColor="#F0F2F5"
+             Title="Trang Chủ">
+    <!-- Title này sẽ hiện trên thanh màu tím của AppShell -->
+
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- Phần đầu trang -->
+        <VerticalStackLayout Grid.Row="0" Padding="15" Spacing="10" BackgroundColor="White">
+            <Label Text="DANH SÁCH NHÂN VIÊN" 
+                   FontSize="20" FontAttributes="Bold" 
+                   TextColor="#007ACC" HorizontalOptions="Center"/>
+
+            <Button Text="Làm mới danh sách" 
+                    Clicked="OnLoadDataClicked"
+                    BackgroundColor="#007ACC" 
+                    TextColor="White"
+                    CornerRadius="20"
+                    HeightRequest="40"/>
+        </VerticalStackLayout>
+
+        <!-- Danh sách hiển thị -->
+        <CollectionView Grid.Row="1" x:Name="EmployeeList" Margin="10">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,5" Padding="10" CornerRadius="10" HasShadow="True" BackgroundColor="White" BorderColor="Transparent">
+                        <Grid ColumnDefinitions="60, *">
+                            <!-- Ảnh đại diện (đang để ảnh mẫu) -->
+                            <Image Grid.Column="0" Source="dotnet_bot.png" 
+                                   HeightRequest="50" WidthRequest="50" 
+                                   Aspect="AspectFill"/>
+
+                            <!-- Thông tin chữ -->
+                            <VerticalStackLayout Grid.Column="1" Padding="10,0,0,0" Spacing="2">
+                                <Label Text="{Binding FullName}" 
+                                       FontSize="16" FontAttributes="Bold" TextColor="#333"/>
+                                <Label Text="{Binding PhoneNumber}" 
+                                       FontSize="13" TextColor="Gray"/>
+                                <Label Text="{Binding Status}" 
+                                       FontSize="12" TextColor="Green" FontAttributes="Italic"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Vòng quay loading khi đang tải -->
+        <ActivityIndicator x:Name="LoadingSpinner"
+                           IsRunning="False"
+                           Color="#007ACC"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           Grid.Row="1"/>
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,119 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppQLNV_DL.Views.CustomerAddJobPage"
+             Title="Dịch vụ">
+
+    <Grid RowDefinitions="*, Auto" Padding="20">
+
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="20">
+
+                <!-- Tiêu đề trang -->
+                <VerticalStackLayout Spacing="5" Margin="0,0,0,10">
+                    <Label Text="Đặt dịch vụ" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="#2C3E50"/>
+                    <Label Text="Vui lòng điền đầy đủ thông tin để đặt dịch vụ" 
+                           FontSize="13" 
+                           TextColor="#7F8C8D"/>
+                </VerticalStackLayout>
+
+                <!-- 1. Địa chỉ -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Địa chỉ" FontSize="14" FontAttributes="Bold" TextColor="#34495E" Margin="5,0"/>
+                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="White" HeightRequest="55">
+                        <Grid ColumnDefinitions="45,*">
+                            <Label Text="📍" VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>
+                            <Entry Grid.Column="1" 
+                                   Placeholder="Nhập địa chỉ..."
+                                   Text="{Binding Location}"
+                                   VerticalOptions="Center"
+                                   TextColor="#2D3436"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- 2. SĐT khách hàng -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Số điện thoại" FontSize="14" FontAttributes="Bold" TextColor="#34495E" Margin="5,0"/>
+                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="White" HeightRequest="55">
+                        <Grid ColumnDefinitions="45,*">
+                            <Label Text="📞" VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>
+                            <Entry Grid.Column="1"
+                                   Keyboard="Telephone"
+                                   Placeholder="Nhập số điện thoại..."
+                                   Text="{Binding CustomerPhone}"
+                                   VerticalOptions="Center"
+                                   TextColor="#2D3436"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- 3. Chọn Dịch vụ -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Dịch vụ yêu cầu" FontSize="14" FontAttributes="Bold" TextColor="#34495E" Margin="5,0"/>
+                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="White" HeightRequest="55">
+                        <Grid ColumnDefinitions="45,*">
+                            <Label Text="🛠" VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>
+                            <Picker Grid.Column="1"
+                                    Title="Chọn dịch vụ"
+                                    ItemsSource="{Binding Services}"
+                                    ItemDisplayBinding="{Binding ServiceName}"
+                                    SelectedItem="{Binding SelectedService}"
+                                    VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- 4. Chọn Thiết bị -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Thiết bị liên quan" FontSize="14" FontAttributes="Bold" TextColor="#34495E" Margin="5,0"/>
+                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="White" HeightRequest="55">
+                        <Grid ColumnDefinitions="45,*">
+                            <Label Text="📱" VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>
+                            <Picker Grid.Column="1"
+                                    Title="Chọn thiết bị"
+                                    ItemsSource="{Binding Devices}"
+                                    ItemDisplayBinding="{Binding DeviceName}"
+                                    SelectedItem="{Binding SelectedDevice}"
+                                    VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- 5. Ghi chú -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Ghi chú / Mô tả" FontSize="14" FontAttributes="Bold" TextColor="#34495E" Margin="5,0"/>
+                    <Border StrokeShape="RoundRectangle 12" StrokeThickness="0" BackgroundColor="White" HeightRequest="100">
+                        <Grid ColumnDefinitions="45,*">
+                            <Label Text="📝" VerticalOptions="Start" HorizontalOptions="Center" FontSize="18" Margin="0,10,0,0"/>
+                            <Editor Grid.Column="1"
+                                    Text="{Binding Note}"
+                                    Placeholder="Nhập ghi chú..."
+                                    Margin="0,5,10,5"
+                                    TextColor="#2D3436"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Nút Giao việc -->
+        <Button Grid.Row="1"
+                Text="XÁC NHẬN"
+                FontSize="16"
+                FontAttributes="Bold"
+                HeightRequest="55"
+                BackgroundColor="RoyalBlue"
+                TextColor="White"
+                CornerRadius="12"
+                Margin="0,15,0,0"
+                Command="{Binding SaveCommand}">
+            <Button.Shadow>
+                <Shadow Brush="RoyalBlue" Offset="0,4" Radius="10" Opacity="0.3"/>
+            </Button.Shadow>
+        </Button>
+    </Grid>
+</ContentPage>

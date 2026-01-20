@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:AppQLNV_DL.ViewModels"
+             x:Class="AppQLNV_DL.Views.DepartmentPage"
+             Title="Quản lý Phòng Ban"
+             BackgroundColor="#F5F6FA">
+    <!-- Màu nền xám nhạt hiện đại -->
+
+    <ContentPage.BindingContext>
+        <viewmodels:DepartmentViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, *">
+        <!-- 1. Thanh tìm kiếm ở trên cùng (Giúp giao diện trông Pro hơn) -->
+        <Border Grid.Row="0" 
+                Margin="15,10,15,5"
+                StrokeShape="RoundRectangle 25"
+                StrokeThickness="0"
+                BackgroundColor="White"
+                HeightRequest="50">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05"/>
+            </Border.Shadow>
+            <Grid ColumnDefinitions="Auto, *">
+                <Label Text="🔍" VerticalOptions="Center" Margin="15,0,10,0" FontSize="16"/>
+                <Entry Grid.Column="1" 
+                       Placeholder="Tìm kiếm phòng ban..." 
+                       VerticalOptions="Center"
+                       FontSize="14"
+                       TextColor="#2D3436"/>
+            </Grid>
+        </Border>
+
+        <!-- 2. Logo nền ẩn nhẹ -->
+        <Image Grid.Row="1"
+               Source="logo.png"
+               Aspect="AspectFit"
+               WidthRequest="250"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Opacity="0.04"
+               ZIndex="-1"
+               InputTransparent="True"/>
+
+        <!-- 3. Danh sách phòng ban -->
+        <RefreshView Grid.Row="1"
+                     IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshCommand}"
+                     RefreshColor="RoyalBlue">
+
+            <CollectionView ItemsSource="{Binding Departments}" 
+                            SelectionMode="None"
+                            Margin="15,5,15,15">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border StrokeShape="RoundRectangle 15"
+                                StrokeThickness="0"
+                                BackgroundColor="White">
+                            <Border.Shadow>
+                                <Shadow Brush="Black" Offset="0,3" Radius="8" Opacity="0.08"/>
+                            </Border.Shadow>
+
+                            <!-- Thêm Gesture để nhấn vào bất cứ đâu trên thẻ cũng mở được danh sách -->
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:DepartmentViewModel}}, Path=DepartmentSelectedCommand}"
+                                    CommandParameter="{Binding .}"/>
+                            </Border.GestureRecognizers>
+
+                            <Grid ColumnDefinitions="6, *, Auto">
+                                <!-- Thanh màu accent mỏng bên trái -->
+                                <BoxView Grid.Column="0" 
+                                         BackgroundColor="RoyalBlue" 
+                                         CornerRadius="15,0,0,15"
+                                         VerticalOptions="Fill"/>
+
+                                <HorizontalStackLayout Grid.Column="1" 
+                                                       Spacing="15" 
+                                                       Padding="15,18">
+                                    <Label Text="🏢" FontSize="26" VerticalOptions="Center"/>
+
+                                    <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                                        <Label Text="{Binding DepartmentName}"
+                                               FontSize="17"
+                                               FontAttributes="Bold"
+                                               TextColor="#2D3436"/>
+                                        <Label Text="Nhấn để xem danh sách" 
+                                               FontSize="11" 
+                                               TextColor="#95A5A6"/>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+
+                                <!-- Nút Chi tiết nhẹ nhàng hơn -->
+                                <Label Grid.Column="2" 
+                                       Text="❯" 
+                                       TextColor="#BDC3C7" 
+                                       FontSize="20" 
+                                       VerticalOptions="Center" 
+                                       Margin="0,0,20,0"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- 4. Floating Action Button (FAB) -->
+        <Border Grid.Row="1"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="25"
+                WidthRequest="60"
+                HeightRequest="60"
+                StrokeShape="RoundRectangle 30"
+                BackgroundColor="RoyalBlue"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="RoyalBlue" Offset="0,4" Radius="12" Opacity="0.4"/>
+            </Border.Shadow>
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnAddEmployeeClicked"/>
+            </Border.GestureRecognizers>
+
+            <Label Text="+" 
+                   TextColor="White" 
+                   FontSize="32" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"
+                   Margin="0,0,0,4"/>
+        </Border>
+
+        <!-- 5. Vòng xoay loading -->
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           Color="RoyalBlue"
+                           WidthRequest="50"
+                           HeightRequest="50" />
+    </Grid>
+</ContentPage>

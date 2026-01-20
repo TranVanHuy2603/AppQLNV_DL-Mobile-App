@@ -1,0 +1,169 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppQLNV_DL.RegisterPage"
+             Shell.NavBarIsVisible="False"  
+             Title="Đăng ký">
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#EEF2F7" Offset="0"/>
+            <GradientStop Color="#E1E7F0" Offset="1"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <Grid Padding="22" RowDefinitions="*,Auto">
+
+
+        <Frame BackgroundColor="Transparent"
+               CornerRadius="120"
+               WidthRequest="220"
+               HeightRequest="220"
+               HorizontalOptions="Start"
+               VerticalOptions="Start"
+               Margin="-80,-80,0,0"
+               HasShadow="False"
+               ZIndex="0">
+            <Frame.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#90CAF9" Offset="0"/>
+                    <GradientStop Color="#42A5F5" Offset="1"/>
+                </LinearGradientBrush>
+            </Frame.Background>
+        </Frame>
+
+        <Frame BackgroundColor="Transparent"
+               CornerRadius="140"
+               WidthRequest="260"
+               HeightRequest="260"
+               HorizontalOptions="End"
+               VerticalOptions="End"
+               Margin="0,0,-100,-100"
+               HasShadow="False"
+               ZIndex="0">
+            <Frame.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#A5D6A7" Offset="0"/>
+                    <GradientStop Color="#66BB6A" Offset="1"/>
+                </LinearGradientBrush>
+            </Frame.Background>
+        </Frame>
+
+        <Frame CornerRadius="28"
+               Padding="26"
+               BackgroundColor="White"
+               HasShadow="True"
+               VerticalOptions="Center"
+               ZIndex="10">
+
+            <ScrollView VerticalOptions="Center">
+                <VerticalStackLayout Spacing="22">
+
+                    <Label Text="ĐĂNG KÝ TÀI KHOẢN"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           TextColor="#1E88E5"
+                           HorizontalOptions="Center"/>
+
+
+                    <Frame CornerRadius="20"
+                           Padding="14,10"
+                           BackgroundColor="#F5F7FB"
+                           BorderColor="#E0E6ED">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label Text="👤" FontSize="16" VerticalOptions="Center"/>
+                            <Entry x:Name="txtName"
+                                   Grid.Column="1"
+                                   Placeholder="Họ và tên"
+                                   BackgroundColor="Transparent"
+                                   TextColor="Black"
+                                   PlaceholderColor="#999"/>
+                        </Grid>
+                    </Frame>
+                    
+                    <Frame CornerRadius="20"
+                           Padding="14,10"
+                           BackgroundColor="#F5F7FB"
+                           BorderColor="#E0E6ED">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label Text="📞" FontSize="16" VerticalOptions="Center"/>
+                            <Entry x:Name="txtPhone"
+                                   Grid.Column="1"
+                                   Placeholder="Số điện thoại"
+                                   Keyboard="Telephone"
+                                   BackgroundColor="Transparent"
+                                   TextColor="Black"
+                                   PlaceholderColor="#999"/>
+                        </Grid>
+                    </Frame>
+
+                    <Frame CornerRadius="20"
+                           Padding="14,10"
+                           BackgroundColor="#F5F7FB"
+                           BorderColor="#E0E6ED">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label Text="🔒" FontSize="16" VerticalOptions="Center"/>
+                            <Entry x:Name="txtPassword"
+                                   Grid.Column="1"
+                                   Placeholder="Mật khẩu"
+                                   IsPassword="True"
+                                   BackgroundColor="Transparent"
+                                   TextColor="Black"
+                                   PlaceholderColor="#999"/>
+                        </Grid>
+                    </Frame>
+
+                    <Frame CornerRadius="20"
+                           Padding="14,10"
+                           BackgroundColor="#F5F7FB"
+                           BorderColor="#E0E6ED">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label Text="🔐" FontSize="16" VerticalOptions="Center"/>
+                            <Entry x:Name="txtConfirmPassword"
+                                   Grid.Column="1"
+                                   Placeholder="Nhập lại mật khẩu"
+                                   IsPassword="True"
+                                   BackgroundColor="Transparent"
+                                   TextColor="Black"
+                                   PlaceholderColor="#999"/>
+                        </Grid>
+                    </Frame>
+
+                    <Button Text="ĐĂNG KÝ"
+                            BackgroundColor="#43A047"
+                            TextColor="White"
+                            HeightRequest="50"
+                            CornerRadius="25"
+                            Clicked="OnRegisterClicked"
+                            FontAttributes="Bold"/>
+
+                    <ActivityIndicator x:Name="loading"
+                                       IsRunning="False"
+                                       IsVisible="False"
+                                       Color="#1E88E5"/>
+
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="5" Margin="0,10,0,0">
+                        <Label Text="Đã có tài khoản?"
+                               TextColor="#757575"/>
+                        <Label Text="Đăng nhập"
+                               TextColor="#1E88E5"
+                               FontAttributes="Bold">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnLoginTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </Frame>
+
+        <Label Grid.Row="1"
+               Text="© 2026 | Designed by Tran Van Huy"
+               FontSize="10"
+               TextColor="Gray"
+               HorizontalOptions="Center"
+               Margin="0,12,0,0"/>
+
+    </Grid>
+</ContentPage>
